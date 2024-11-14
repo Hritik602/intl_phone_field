@@ -325,7 +325,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       // remove country code from the initial number value
       number = number.replaceFirst(RegExp("^${_selectedCountry.fullCountryCode}"), "");
     } else {
-      _selectedCountry = _countryList.firstWhere((item) => item.code == (widget.initialCountryCode ?? 'US'),
+      _selectedCountry = _countryList.firstWhere((item) => item.dialCode == (widget.initialCountryCode ?? '+966'),
           orElse: () => _countryList.first);
 
       // remove country code from the initial number value
