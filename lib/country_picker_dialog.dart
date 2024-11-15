@@ -98,6 +98,10 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
               padding: widget.style?.searchFieldPadding ?? const EdgeInsets.all(0),
               child: TextField(
                 cursorColor: widget.style?.searchFieldCursorColor,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: widget.style?.searchFieldCursorColor,
+                ),
                 decoration: widget.style?.searchFieldInputDecoration ??
                     InputDecoration(
                       suffixIcon: const Icon(Icons.search),
