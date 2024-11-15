@@ -10,6 +10,7 @@ class PickerDialogStyle {
 
   final TextStyle? countryNameStyle;
 
+  final TextStyle? searchTextFieldStyle;
   final Widget? listTileDivider;
 
   final EdgeInsets? listTilePadding;
@@ -24,18 +25,18 @@ class PickerDialogStyle {
 
   final double? width;
 
-  PickerDialogStyle({
-    this.backgroundColor,
-    this.countryCodeStyle,
-    this.countryNameStyle,
-    this.listTileDivider,
-    this.listTilePadding,
-    this.padding,
-    this.searchFieldCursorColor,
-    this.searchFieldInputDecoration,
-    this.searchFieldPadding,
-    this.width,
-  });
+  PickerDialogStyle(
+      {this.backgroundColor,
+      this.countryCodeStyle,
+      this.countryNameStyle,
+      this.listTileDivider,
+      this.listTilePadding,
+      this.padding,
+      this.searchFieldCursorColor,
+      this.searchFieldInputDecoration,
+      this.searchFieldPadding,
+      this.width,
+      this.searchTextFieldStyle});
 }
 
 class CountryPickerDialog extends StatefulWidget {
@@ -46,6 +47,7 @@ class CountryPickerDialog extends StatefulWidget {
   final List<Country> filteredCountries;
   final PickerDialogStyle? style;
   final String languageCode;
+  final TextStyle? searchTextFieldStyle;
 
   const CountryPickerDialog({
     Key? key,
@@ -55,6 +57,7 @@ class CountryPickerDialog extends StatefulWidget {
     required this.onCountryChanged,
     required this.selectedCountry,
     required this.filteredCountries,
+    this.searchTextFieldStyle,
     this.style,
   }) : super(key: key);
 
@@ -98,10 +101,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
               padding: widget.style?.searchFieldPadding ?? const EdgeInsets.all(0),
               child: TextField(
                 cursorColor: widget.style?.searchFieldCursorColor,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: widget.style?.searchFieldCursorColor,
-                ),
+                style: widget.style?.searchTextFieldStyle ?? const TextStyle(fontSize: 13, color: Colors.black),
                 decoration: widget.style?.searchFieldInputDecoration ??
                     InputDecoration(
                       suffixIcon: const Icon(Icons.search),
