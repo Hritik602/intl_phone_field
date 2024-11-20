@@ -253,6 +253,9 @@ class IntlPhoneField extends StatefulWidget {
   /// Flag button height
   final double? flagButtonHeight;
 
+  /// Flag button bottom border color
+  final Color? flagButtonBorderColor;
+
   const IntlPhoneField(
       {Key? key,
       this.formFieldKey,
@@ -301,7 +304,8 @@ class IntlPhoneField extends StatefulWidget {
       this.flagsButtonMargin = EdgeInsets.zero,
       this.magnifierConfiguration,
       this.contentPadding,
-      this.flagButtonHeight})
+      this.flagButtonHeight,
+      this.flagButtonBorderColor})
       : super(key: key);
 
   @override
@@ -393,8 +397,10 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         Container(
           height: widget.flagButtonHeight ?? 54, // Fixed height matching TextField
           margin: const EdgeInsets.only(right: 8),
-          decoration: const BoxDecoration(
-            border: Border(bottom: BorderSide(width: 2.0)),
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(width: 2.0, color: widget.flagButtonBorderColor ?? Colors.grey),
+            ),
           ),
           child: InkWell(
             onTap: widget.enabled ? _changeCountry : null,
@@ -486,7 +492,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
 
               return validatorMessage;
             },
-            // maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
+            maxLength: widget.disableLengthCheck ? null : _selectedCountry.maxLength,
             keyboardType: widget.keyboardType,
             inputFormatters: widget.inputFormatters,
             enabled: widget.enabled,
