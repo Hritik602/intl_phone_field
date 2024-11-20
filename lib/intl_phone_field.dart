@@ -256,6 +256,9 @@ class IntlPhoneField extends StatefulWidget {
   /// Flag button bottom border color
   final Color? flagButtonBorderColor;
 
+  /// Flab button bottom border width
+  final double? flagButtonBorderWidth;
+
   const IntlPhoneField(
       {Key? key,
       this.formFieldKey,
@@ -305,7 +308,8 @@ class IntlPhoneField extends StatefulWidget {
       this.magnifierConfiguration,
       this.contentPadding,
       this.flagButtonHeight,
-      this.flagButtonBorderColor})
+      this.flagButtonBorderColor,
+      this.flagButtonBorderWidth})
       : super(key: key);
 
   @override
@@ -399,7 +403,8 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
           margin: const EdgeInsets.only(right: 8),
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(width: 2.0, color: widget.flagButtonBorderColor ?? Colors.grey),
+              bottom: BorderSide(
+                  width: widget.flagButtonBorderWidth ?? 2.0, color: widget.flagButtonBorderColor ?? Colors.grey),
             ),
           ),
           child: InkWell(
