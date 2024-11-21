@@ -477,7 +477,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
 
   Container _buildFlagsButton() {
     return Container(
-      margin: widget.flagsButtonMargin,
+      margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
       child: DecoratedBox(
         decoration: widget.dropdownDecoration,
         child: InkWell(
