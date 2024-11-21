@@ -399,8 +399,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.08,
       width: MediaQuery.of(context).size.width,
       child: Row(
