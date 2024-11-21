@@ -242,7 +242,7 @@ class IntlPhoneField extends StatefulWidget {
   /// The amount of space to surround the country selector button.
   ///
   /// If unset, defaults to [EdgeInsets.zero].
-  final EdgeInsets flagsButtonMargin;
+  final EdgeInsets? flagsButtonMargin;
 
   /// Enable the autofill hint for phone number.
   final bool disableAutoFillHints;
@@ -307,7 +307,7 @@ class IntlPhoneField extends StatefulWidget {
       this.cursorWidth = 2.0,
       this.showCursor = true,
       this.pickerDialogStyle,
-      this.flagsButtonMargin = EdgeInsets.zero,
+      this.flagsButtonMargin,
       this.magnifierConfiguration,
       this.contentPadding,
       this.flagButtonHeight,
@@ -477,7 +477,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
 
   Container _buildFlagsButton() {
     return Container(
-      margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.02),
+      margin: widget.flagsButtonMargin ?? EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.022),
       child: DecoratedBox(
         decoration: widget.dropdownDecoration,
         child: InkWell(
