@@ -191,6 +191,9 @@ class IntlPhoneField extends StatefulWidget {
   /// Whether this text field should focus itself if nothing else is already focused.
   final bool autofocus;
 
+  /// Whether the counter should show the current length of the entered text.
+  final bool shouldBuildCounter;
+
   /// Autovalidate mode for text form field.
   ///
   /// If [AutovalidateMode.onUserInteraction], this FormField will only auto-validate after its content changes.
@@ -275,6 +278,7 @@ class IntlPhoneField extends StatefulWidget {
       this.textAlign = TextAlign.left,
       this.textAlignVertical,
       this.onTap,
+      this.shouldBuildCounter = false,
       this.showWavyFlag = false,
       this.readOnly = false,
       this.initialValue,
@@ -427,6 +431,13 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
               cursorHeight: widget.cursorHeight,
               cursorRadius: widget.cursorRadius,
               cursorWidth: widget.cursorWidth,
+              buildCounter: (context, {required currentLength, required isFocused, required maxLength}) =>
+                  widget.shouldBuildCounter
+                      ? Text(
+                          '$currentLength/$maxLength',
+                          style: widget.style,
+                        )
+                      : null,
               showCursor: widget.showCursor,
               onFieldSubmitted: widget.onSubmitted,
               magnifierConfiguration: widget.magnifierConfiguration,
