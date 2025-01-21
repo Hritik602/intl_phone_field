@@ -44,6 +44,8 @@ class CountryPickerDialog extends StatefulWidget {
   final Country selectedCountry;
   final ValueChanged<Country> onCountryChanged;
   final String searchText;
+  final bool? showWavyFlag;
+
   final List<Country> filteredCountries;
   final PickerDialogStyle? style;
   final String languageCode;
@@ -53,6 +55,7 @@ class CountryPickerDialog extends StatefulWidget {
     Key? key,
     required this.searchText,
     required this.languageCode,
+    this.showWavyFlag = false,
     required this.countryList,
     required this.onCountryChanged,
     required this.selectedCountry,
@@ -124,7 +127,7 @@ class _CountryPickerDialogState extends State<CountryPickerDialog> {
                 itemBuilder: (ctx, index) => Column(
                   children: <Widget>[
                     ListTile(
-                      leading: kIsWeb
+                      leading: kIsWeb || widget.showWavyFlag == false
                           ? Image.asset(
                               'assets/flags/${_filteredCountries[index].code.toLowerCase()}.png',
                               package: 'intl_phone_field',
