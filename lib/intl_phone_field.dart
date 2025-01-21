@@ -28,6 +28,9 @@ class IntlPhoneField extends StatefulWidget {
   final bool readOnly;
   final FormFieldSetter<PhoneNumber>? onSaved;
 
+  /// Whether to show flag wavy or straight.
+  final bool showWavyFlag;
+
   /// {@macro flutter.widgets.editableText.onChanged}
   ///
   /// See also:
@@ -272,6 +275,7 @@ class IntlPhoneField extends StatefulWidget {
       this.textAlign = TextAlign.left,
       this.textAlignVertical,
       this.onTap,
+      this.showWavyFlag = false,
       this.readOnly = false,
       this.initialValue,
       this.keyboardType = TextInputType.phone,
@@ -405,7 +409,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(flex: 3, child: _buildFlagsButton()),
+          // Expanded(flex: 3, child: _buildFlagsButton()),
           Expanded(
             flex: 8,
             child: TextFormField(
@@ -426,7 +430,11 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
               showCursor: widget.showCursor,
               onFieldSubmitted: widget.onSubmitted,
               magnifierConfiguration: widget.magnifierConfiguration,
-              decoration: widget.decoration.copyWith(contentPadding: widget.contentPadding, isDense: true),
+              decoration: widget.decoration.copyWith(
+                contentPadding: widget.contentPadding,
+                isDense: true,
+                prefixIcon: _buildFlagsButton(),
+              ),
               style: widget.style,
               onSaved: (value) {
                 widget.onSaved?.call(
@@ -475,58 +483,51 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
     );
   }
 
-  Container _buildFlagsButton() {
-    return Container(
-      margin: widget.flagsButtonMargin ?? EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.027),
-      child: DecoratedBox(
-        decoration: widget.dropdownDecoration,
-        child: InkWell(
-          borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
-          onTap: widget.enabled ? _changeCountry : null,
-          child: Padding(
-            padding: widget.flagsButtonPadding,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const SizedBox(
-                  width: 1,
-                ),
-                if (widget.enabled &&
-                    widget.showDropdownIcon &&
-                    widget.dropdownIconPosition == IconPosition.leading) ...[
-                  widget.dropdownIcon,
-                  const SizedBox(width: 2),
-                ],
-                if (widget.showCountryFlag) ...[
-                  kIsWeb
-                      ? Image.asset(
-                          'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
-                          package: 'intl_phone_field',
-                          width: 32,
-                        )
-                      : Text(
-                          _selectedCountry.flag,
-                          style: widget.dropdownTextStyle,
-                        ),
-                  const SizedBox(width: 2),
-                ],
-                FittedBox(
-                  child: Text(
-                    '+${_selectedCountry.dialCode}',
-                    style: widget.style,
-                  ),
-                ),
-                if (widget.enabled &&
-                    widget.showDropdownIcon &&
-                    widget.dropdownIconPosition == IconPosition.trailing) ...[
-                  const SizedBox(width: 4),
-                  widget.dropdownIcon,
-                ],
-                const SizedBox(width: 2),
-              ],
+  Widget _buildFlagsButton() {
+    return DecoratedBox(
+      decoration: widget.dropdownDecoration,
+      child: InkWell(
+        borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
+        onTap: widget.enabled ? _changeCountry : null,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(
+              width: 1,
             ),
-          ),
+            if (widget.enabled && widget.showDropdownIcon && widget.dropdownIconPosition == IconPosition.leading) ...[
+              widget.dropdownIcon,
+              const SizedBox(width: 2),
+            ],
+            if (widget.showCountryFlag) ...[
+              kIsWeb || (widget.showWavyFlag == false)
+                  ? CircleAvatar(
+                      radius: widget.flagButtonHeight ?? 12,
+                      backgroundColor: widget.flagButtonBorderColor ?? Colors.transparent,
+                      backgroundImage: AssetImage(
+                        'assets/flags/${_selectedCountry.code.toLowerCase()}.png',
+                        package: 'intl_phone_field',
+                      ),
+                    )
+                  : Text(
+                      _selectedCountry.flag,
+                      style: widget.dropdownTextStyle,
+                    ),
+              const SizedBox(width: 2),
+            ],
+            FittedBox(
+              child: Text(
+                '+${_selectedCountry.dialCode}',
+                style: widget.style,
+              ),
+            ),
+            if (widget.enabled && widget.showDropdownIcon && widget.dropdownIconPosition == IconPosition.trailing) ...[
+              const SizedBox(width: 4),
+              widget.dropdownIcon,
+            ],
+            const SizedBox(width: 2),
+          ],
         ),
       ),
     );
